@@ -12,3 +12,16 @@
 
 Start Screen:  
 ![Active column](https://github.com/job963/jxFiles/raw/master/docs/img/screenshot.png)
+
+## Changelog
+
+* **0.1 Initial Release**
+  * Multiple start folder supported
+  * Icons for filetypes
+  * Navigation between folders
+  * Upload of files
+  
+* **0.2** 
+  * Error trapping
+  * Bug with larger files fixed 
+  * Picture preview on hover

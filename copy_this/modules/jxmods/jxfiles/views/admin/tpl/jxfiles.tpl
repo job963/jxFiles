@@ -1,5 +1,6 @@
 [{*debug*}]
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign box=" "}]
+<link href="[{$oViewConf->getModuleUrl('jxfiles','out/admin/src/jxfiles.css')}]" type="text/css" rel="stylesheet">
 
 <script type="text/javascript">
   if(top)
@@ -195,11 +196,22 @@ function change_all( name, elem )
                         [{assign var="iconFile" value="empty"}]
                     [{/if}]
                     <img src="[{$iconPath}]/[{$iconFile}].png" style="position:relative;left:2px;top:3px;">&nbsp;
-                    <a href="[{if $sFile.file}][{$sShopUrl}][{$sActPath}]/[{$sFile.name}][{else}]#[{/if}]" 
+                    [{if $sFile.file}]
+                        <a class="thumbnail" href="#thumb"> [{*href="[{$sShopUrl}][{$sActPath}]/[{$sFile.name}]" target="_blank" />*}]
+                            <span><img src="[{$sShopUrl}][{$sActPath}]/[{$sFile.name}]" style="max-height:144px;width:auto;"/></span>
+                            [{$sFile.name}]
+                        </a>
+                    [{else}]
+                        <a href="#" onclick="javascript:document.forms.jxfiles.jxsubdir.value='/'+'[{$sFile.name}]';document.forms.jxfiles.submit();" />
+                        [{$sFile.name}]
+                        </a>
+                    [{/if}]
+                    
+                    [{*<a href="[{if $sFile.file}][{$sShopUrl}][{$sActPath}]/[{$sFile.name}][{else}]#[{/if}]" 
                        [{if !$sFile.file}]onclick="javascript:document.forms.jxfiles.jxsubdir.value='/'+'[{$sFile.name}]';document.forms.jxfiles.submit();"[{/if}]
                        [{if $sFile.file}]target="_blank"[{/if}] />
                     [{$sFile.name}]
-                    </a>
+                    </a>*}]
                 </td>
                 <td class="[{$listclass}]">[{$sFile.date}]</td>
                 <td class="[{$listclass}]" align="right">[{if $sFile.file}][{$sFile.size}][{/if}]&nbsp;</td>
