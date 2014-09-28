@@ -79,6 +79,11 @@ class jxfiles extends oxAdminView
             $sSortBy = 'name';
         $aFiles = $this->_sortFiles($aFiles, $sSortBy );
         
+        $oModule = oxNew('oxModule');
+        $oModule->load('jxfiles');
+        $oSmarty->assign("sModuleId",  $oModule->getId() );
+        $oSmarty->assign("sModuleVersion", $oModule->getInfo('version') );
+        
         $oSmarty->assign("iUploadError",$_FILES["uploadfile"]["error"]);
         $oSmarty->assign("sShopPath",$sShopPath);
         $oSmarty->assign("sShopUrl",$myConfig->getConfigParam("sShopURL"));

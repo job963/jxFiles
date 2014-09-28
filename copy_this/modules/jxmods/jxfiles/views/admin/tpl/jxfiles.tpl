@@ -70,6 +70,8 @@ function change_all( name, elem )
 </script>
 
     <h1>[{ oxmultilang ident="JXFILES_TITLE" }]</h1>
+    <div style="position:absolute;top:4px;right:8px;color:gray;font-size:0.9em;border:1px solid gray;border-radius:3px;">&nbsp;[{$sModuleId}]&nbsp;[{$sModuleVersion}]&nbsp;</div>
+    
     <form name="transfer" id="transfer" action="[{ $shop->selflink }]" method="post">
         [{ $shop->hiddensid }]
         <input type="hidden" name="oxid" value="[{ $oxid }]">
@@ -87,7 +89,7 @@ function change_all( name, elem )
         <input type="hidden" name="jxsortby" value="[{$sSortBy}]">
         [{foreach name=dirs item=aDir from=$aDirs}]
             <a href="#" onclick="javascript:document.forms.jxchdir.jxactdir.value='[{$aDir.path}]';document.forms.jxchdir.jxsectiondir.value='[{$aDir.path}]';document.forms.jxchdir.submit();">
-                <div style="float:left; cursor:default; border:1px [{if $aDir.path == $sSectionPath}]inset[{else}]outset[{/if}] gray; background-color:[{if $aDir.path == $sSectionPath}]#aaa[{else}]#e0e0e0[{/if}]; margin:4px; padding:4px; font-size:1.25em; font-weight:bold;" alt="[{$aDir.path}]" title="[{$aDir.path}]">
+                <div style="float:left; cursor:default; border:2px [{if $aDir.path == $sSectionPath}]inset[{else}]outset[{/if}] gray; background-color:[{if $aDir.path == $sSectionPath}]#aaa[{else}]#e0e0e0[{/if}]; margin:4px; padding:4px; font-size:1.25em; font-weight:bold; border-radius:3px;" alt="[{$aDir.path}]" title="[{$aDir.path}]">
                     &nbsp;[{$aDir.title}]&nbsp;
                 </div>
             </a>
@@ -105,7 +107,7 @@ function change_all( name, elem )
             <input type="hidden" name="MAX_FILE_SIZE" value="[{$maxFileSize}]">
             <input type="hidden" name="jxactdir" value="[{$sActPath}]">
             <input type="hidden" name="jxsortby" value="[{$sSortBy}]">
-            <input type="file" name="uploadfile" [{*size="40"*}] maxlength="[{$maxFileSize}]">[{*<br />*}]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="file" name="uploadfile" [{*size="80"*}] maxlength="[{$maxFileSize}]">[{*<br />*}]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="submit" name="submit" value=" [{ oxmultilang ident="ARTICLE_EXTEND_FILEUPLOAD" }] " style="margin-top:8px;" />
         </fieldset>
     </form> 
@@ -196,9 +198,13 @@ function change_all( name, elem )
                         [{assign var="iconFile" value="empty"}]
                     [{/if}]
                     <img src="[{$iconPath}]/[{$iconFile}].png" style="position:relative;left:2px;top:3px;">&nbsp;
-                    [{if $sFile.file}]
+                    [{if $sFile.type == "PNG" OR $sFile.type == "JPG" OR $sFile.type == "JPEG" OR $sFile.type == "GIF" OR $sFile.type == "ICO"}]
                         <a class="thumbnail" href="#thumb"> [{*href="[{$sShopUrl}][{$sActPath}]/[{$sFile.name}]" target="_blank" />*}]
                             <span><img src="[{$sShopUrl}][{$sActPath}]/[{$sFile.name}]" style="max-height:144px;width:auto;"/></span>
+                            [{$sFile.name}]
+                        </a>
+                    [{elseif $sFile.file}]
+                        <a href="[{$sShopUrl}][{$sActPath}]/[{$sFile.name}]" target="_blank">
                             [{$sFile.name}]
                         </a>
                     [{else}]
