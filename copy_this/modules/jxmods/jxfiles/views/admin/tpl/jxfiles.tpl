@@ -96,18 +96,39 @@ function change_all( name, elem )
     <br clear="all" />
 
     <form enctype="multipart/form-data" action="[{ $oViewConf->selflink }]" method="post">
-        <h2>[{$sActTitle}]</h2>
+        [{*<h2>[{$sActTitle}]</h2>*}]
         [{*ActPath: <b>[{$sActPath}]</b><br/>*}]
-        <fieldset style="width:33%;">
-            <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+        [{assign var="maxFileSize" value="100000000"}]
+        <fieldset style="width:30%;float:left;margin-right:20px;margin-bottom:20px;">
+            [{*<legend>Upload</legend>*}]
+            <input type="hidden" name="MAX_FILE_SIZE" value="[{$maxFileSize}]">
             <input type="hidden" name="jxactdir" value="[{$sActPath}]">
             <input type="hidden" name="jxsortby" value="[{$sSortBy}]">
-            <input type="file" name="uploadfile" size="40" maxlength="100000"><br />
-            <input type="submit" name="Submit" value=" [{ oxmultilang ident="ARTICLE_EXTEND_FILEUPLOAD" }] " style="margin-top:8px;" />
+            <input type="file" name="uploadfile" [{*size="40"*}] maxlength="[{$maxFileSize}]">[{*<br />*}]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="submit" name="submit" value=" [{ oxmultilang ident="ARTICLE_EXTEND_FILEUPLOAD" }] " style="margin-top:8px;" />
         </fieldset>
-    </form>    
+    </form> 
+    [{*<form>
+        <fieldset style="width:30%">
+            <legend>L&ouml;schen</legend>
+            <input type="submit" />
+        </fieldset>
+    </form>*}]
         
         
+
+    [{if $sUploadedFile != ""}]
+        <div style="margin-left:10px; border:1px #00cc00 solid; border-radius:3px; padding:6px; background-color:#ddffdd; display:inline-block;">
+            <span style="color:#00bb00;">[{ oxmultilang ident="JXFILES_UPLOADSUCCESS1" }] <b>&nbsp;[{$sUploadedFile}]&nbsp;</b> [{ oxmultilang ident="JXFILES_UPLOADSUCCESS2" }]</span><br />
+        </div>
+    [{/if}]
+    [{if $iUploadError > 0}]
+        <div style="margin-left:10px; border:1px #dd0000 solid; border-radius:3px; padding:6px; background-color:#ffdddd; display:inline-block;">
+            <span style="color:#dd0000; font-size:1.1em; font-weight:bold;">[{ oxmultilang ident="JXFILES_ERRORONUPLOAD" }]</span><br />
+            [{assign var="errText" value="JXFILES_UPLOADERROR"|cat:$iUploadError}]
+            #[{$iUploadError}]: [{ oxmultilang ident=$errText }] (<a href="http://php.net/manual/de/features.file-upload.errors.php" target="_blank" style="font-weight:normal;text-decoration:underline;">Info</a>)
+        </div>
+    [{/if}]
 
 <form name="jxfiles" id="jxfiles" action="[{ $oViewConf->selflink }]" method="post">
     <p>
@@ -120,7 +141,7 @@ function change_all( name, elem )
         <input type="hidden" name="jxsortby" value="[{$sSortBy}]">
         <input type="hidden" name="jxsubdir" value="">
     </p>
-
+    
     <div id="liste">
         <table cellspacing="0" cellpadding="0" border="0" width="99%">
         <tr>
@@ -194,7 +215,11 @@ function change_all( name, elem )
                         [{$sFile.type}][{ oxmultilang ident="JXFILES_FILE" }]
                     [{/if}]
                 </td>
-                <td class="[{$listclass}]" align="center"><input type="checkbox" name="jxfiles_oxid[]" value="[{$Order.orderartid}]"></td>
+                <td class="[{$listclass}]" align="center">
+                    [{if $sFile.file AND $sFile.write}]
+                        <input type="checkbox" name="jxfiles_oxid[]" value="[{$Order.orderartid}]">
+                    [{/if}]
+                </td>
             </tr>
         [{/foreach}]
         [{*</tbody>*}]

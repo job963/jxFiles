@@ -18,7 +18,7 @@
  *
  * @link      https://github.com/job963/jxFiles
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- * @copyright (C) Joachim Barthel 2012-2013 
+ * @copyright (C) Joachim Barthel 2012-2014 
  *
  */
  
@@ -62,8 +62,15 @@ class jxfiles extends oxAdminView
             }
         }
         
+        /*$this->_logAction( " " );
+        $this->_logAction( "error=".$_FILES["uploadfile"]["error"] );
+        $this->_logAction( "file1=".oxConfig::getParameter( "uploadfile" ) );
+        $this->_logAction( "file2=".$_FILES["uploadfile"]["tmp_name"] );
+        $this->_logAction( "upload=".$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']) );*/
         if ($_FILES["uploadfile"]["tmp_name"] != '') {
+            //$this->_logAction( '***UPLOAD***' );
             move_uploaded_file($_FILES["uploadfile"]["tmp_name"] ,$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']));
+            $oSmarty->assign("sUploadedFile",basename($_FILES['uploadfile']['name']));
         }
         
         $aFiles = $this->_getFiles($sShopPath.$sActPath);
@@ -72,6 +79,7 @@ class jxfiles extends oxAdminView
             $sSortBy = 'name';
         $aFiles = $this->_sortFiles($aFiles, $sSortBy );
         
+        $oSmarty->assign("iUploadError",$_FILES["uploadfile"]["error"]);
         $oSmarty->assign("sShopPath",$sShopPath);
         $oSmarty->assign("sShopUrl",$myConfig->getConfigParam("sShopURL"));
         $oSmarty->assign("aDirs",$aDirs);
@@ -97,7 +105,8 @@ class jxfiles extends oxAdminView
                         'date' => date( "Y-m-d  H:i:s", filemtime($sPath.'/'.$entry) ),
                         'size' => filesize($sPath.'/'.$entry),
                         'type' => strtoupper(substr(strrchr($entry, '.'), 1)),
-                        'file' => (!is_dir($sPath.'/'.$entry))
+                        'file' => (!is_dir($sPath.'/'.$entry)),
+                        'write' => is_writable($sPath.'/'.$entry)
                     ));
             }
         }
@@ -130,6 +139,19 @@ class jxfiles extends oxAdminView
         array_multisort($aSort, $sortOrder, $sortMode, $aFiles);
         return $aFiles;
     }
+    
+    
+    private function _logAction($sText)
+    {
+        $myConfig = oxRegistry::get("oxConfig");
+        $sShopPath = $myConfig->getConfigParam("sShopDir");
+        $sLogPath = $sShopPath.'/log/';
+        
+        $fh = fopen($sLogPath.'jxmods.log',"a+");
+        fputs($fh,$sText."\n");
+        fclose($fh);
+    }
 
 }
+
 ?>

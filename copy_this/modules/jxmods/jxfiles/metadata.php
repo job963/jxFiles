@@ -16,7 +16,7 @@ $aModule = array(
                         'en' => 'Admin module for managing of files.'
                         ),
     'thumbnail'    => 'jxfiles.png',
-    'version'      => '0.1',
+    'version'      => '0.2',
     'author'       => 'Joachim Barthel',
     'url'          => 'https://github.com/job963/jxFiles',
     'email'        => 'jobarthel@gmail.com',
