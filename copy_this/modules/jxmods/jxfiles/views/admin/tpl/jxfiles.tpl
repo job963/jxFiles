@@ -89,7 +89,7 @@ function change_all( name, elem )
         <input type="hidden" name="jxsortby" value="[{$sSortBy}]">
         [{foreach name=dirs item=aDir from=$aDirs}]
             <a href="#" onclick="javascript:document.forms.jxchdir.jxactdir.value='[{$aDir.path}]';document.forms.jxchdir.jxsectiondir.value='[{$aDir.path}]';document.forms.jxchdir.submit();">
-                <div style="float:left; cursor:default; border:2px [{if $aDir.path == $sSectionPath}]inset[{else}]outset[{/if}] gray; background-color:[{if $aDir.path == $sSectionPath}]#aaa[{else}]#e0e0e0[{/if}]; margin:4px; padding:4px; font-size:1.25em; font-weight:bold; border-radius:3px;" alt="[{$aDir.path}]" title="[{$aDir.path}]">
+                <div style="float:left; cursor:default; border:2px [{if $aDir.path == $sSectionPath}]inset[{else}]outset[{/if}] #ccc; background-image:linear-gradient(to top,[{if $aDir.path == $sSectionPath}]#ccc,#999[{else}]#bbb,#f8f8f8[{/if}]); background-color:[{if $aDir.path == $sSectionPath}]#aaa[{else}]#e0e0e0[{/if}]; margin:4px; padding:4px; font-size:1.25em; font-weight:bold; border-radius:3px;" alt="[{$aDir.path}]" title="[{$aDir.path}]">
                     &nbsp;[{$aDir.title}]&nbsp;
                 </div>
             </a>
