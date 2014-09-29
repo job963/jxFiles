@@ -89,7 +89,7 @@ function change_all( name, elem )
         <input type="hidden" name="jxsortby" value="[{$sSortBy}]">
         [{foreach name=dirs item=aDir from=$aDirs}]
             <a href="#" onclick="javascript:document.forms.jxchdir.jxactdir.value='[{$aDir.path}]';document.forms.jxchdir.jxsectiondir.value='[{$aDir.path}]';document.forms.jxchdir.submit();">
-                <div style="float:left; cursor:default; border:2px [{if $aDir.path == $sSectionPath}]inset[{else}]outset[{/if}] #ccc; background-image:linear-gradient(to top,[{if $aDir.path == $sSectionPath}]#ccc,#999[{else}]#bbb,#f8f8f8[{/if}]); background-color:[{if $aDir.path == $sSectionPath}]#aaa[{else}]#e0e0e0[{/if}]; margin:4px; padding:4px; font-size:1.25em; font-weight:bold; border-radius:3px;" alt="[{$aDir.path}]" title="[{$aDir.path}]">
+                <div class="[{if $aDir.path == $sSectionPath}]folderbtnpressed[{else}]folderbtn[{/if}]" [{*style="float:left; cursor:default; border:2px [{if $aDir.path == $sSectionPath}]inset[{else}]outset[{/if}] #ccc; background-image:linear-gradient(to top,[{if $aDir.path == $sSectionPath}]#ccc,#999[{else}]#bbb,#f8f8f8[{/if}]); background-color:[{if $aDir.path == $sSectionPath}]#aaa[{else}]#e0e0e0[{/if}]; margin:4px; padding:4px; font-size:1.25em; font-weight:bold; border-radius:3px;"*}] alt="[{$aDir.path}]" title="[{$aDir.path}]">
                     &nbsp;[{$aDir.title}]&nbsp;
                 </div>
             </a>
@@ -176,6 +176,7 @@ function change_all( name, elem )
                 </div></div>
             </td>
             <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="JXFILES_FILETYPE" }]</div></div></td>
+            <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="JXFILES_FILERIGHTS" }]</div></div></td>
             <td class="listfilter" style="[{$headStyle}]" align="center"><div class="r1"><div class="b1"><input type="checkbox" onclick="change_all('jxfiles_oxid[]', this)"></div></div></td>
         </tr>
 
@@ -220,11 +221,11 @@ function change_all( name, elem )
                     </a>*}]
                 </td>
                 <td class="[{$listclass}]">[{$sFile.date}]</td>
-                <td class="[{$listclass}]" align="right">[{if $sFile.file}][{$sFile.size}][{/if}]&nbsp;</td>
+                <td class="[{$listclass}]" align="right">[{if $sFile.file}]<span title="[{$sFile.sizeOrg|number_format:0:",":"."}] Bytes">[{$sFile.sizeKB|number_format:0:",":"."}] KB</span>[{/if}]&nbsp;</td>
                 <td class="[{$listclass}]">
                     &nbsp;
                     [{if $sFile.type == "PNG" OR $sFile.type == "JPG" OR $sFile.type == "JPEG" OR $sFile.type == "GIF" OR $sFile.type == "ICO"}]
-                        PNG[{ oxmultilang ident="JXFILES_IMAGEFILE" }]
+                        [{$sFile.type}][{ oxmultilang ident="JXFILES_IMAGEFILE" }]
                     [{elseif $sFile.type == "PDF"}]
                         PDF[{ oxmultilang ident="JXFILES_DOCUMENTFILE" }]
                     [{elseif !$sFile.file}]
@@ -233,8 +234,9 @@ function change_all( name, elem )
                         [{$sFile.type}][{ oxmultilang ident="JXFILES_FILE" }]
                     [{/if}]
                 </td>
+                <td class="[{$listclass}]">[{if $sFile.writable}]W[{else}]R/O[{/if}]</td>
                 <td class="[{$listclass}]" align="center">
-                    [{if $sFile.file AND $sFile.write}]
+                    [{if $sFile.file AND $sFile.writable}]
                         <input type="checkbox" name="jxfiles_oxid[]" value="[{$Order.orderartid}]">
                     [{/if}]
                 </td>

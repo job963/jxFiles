@@ -64,11 +64,8 @@ class jxfiles extends oxAdminView
         
         /*$this->_logAction( " " );
         $this->_logAction( "error=".$_FILES["uploadfile"]["error"] );
-        $this->_logAction( "file1=".oxConfig::getParameter( "uploadfile" ) );
-        $this->_logAction( "file2=".$_FILES["uploadfile"]["tmp_name"] );
         $this->_logAction( "upload=".$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']) );*/
         if ($_FILES["uploadfile"]["tmp_name"] != '') {
-            //$this->_logAction( '***UPLOAD***' );
             move_uploaded_file($_FILES["uploadfile"]["tmp_name"] ,$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']));
             $oSmarty->assign("sUploadedFile",basename($_FILES['uploadfile']['name']));
         }
@@ -108,10 +105,11 @@ class jxfiles extends oxAdminView
                 array_push ($aFiles, array(
                         'name' => $entry,
                         'date' => date( "Y-m-d  H:i:s", filemtime($sPath.'/'.$entry) ),
-                        'size' => filesize($sPath.'/'.$entry),
+                        'sizeKB' => max(1,filesize($sPath.'/'.$entry)/1000),
+                        'sizeOrg' => filesize($sPath.'/'.$entry),
                         'type' => strtoupper(substr(strrchr($entry, '.'), 1)),
                         'file' => (!is_dir($sPath.'/'.$entry)),
-                        'write' => is_writable($sPath.'/'.$entry)
+                        'writable' => is_writable($sPath.'/'.$entry)
                     ));
             }
         }

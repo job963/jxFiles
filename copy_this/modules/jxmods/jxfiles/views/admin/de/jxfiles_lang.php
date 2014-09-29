@@ -6,6 +6,7 @@ $aLang = array(
     'JXFILES_TITLE'           => 'Datei-Verwaltung',
     'JXFILES_FILENAME'        => 'Name',
     'JXFILES_FILETYPE'        => 'Typ',
+    'JXFILES_FILERIGHTS'      => 'Rechte',
     'JXFILES_FILESIZE'        => 'Gr&ouml;&szlig;e',
     'JXFILES_FILEDATE'        => 'Datum',
     'JXFILES_IMAGEFILE'       => '-Bilddatei',
@@ -19,7 +20,7 @@ $aLang = array(
     'JXFILES_UPLOADERROR4'    => 'Es wurde keine Datei hochgeladen.',
     'JXFILES_UPLOADERROR6'    => 'Fehlender tempor&auml;rer Ordner.',
     'JXFILES_UPLOADERROR7'    => 'Speichern der Datei auf die Festplatte ist fehlgeschlagen.',
-    'JXFILES_UPLOADERROR8'    => 'Eine PHP Erweiterung hat den Upload der Datei gestoppt. PHP bietet keine M&ouml;glichkeit an,<br> um festzustellen welche Erweiterung das Hochladen der Datei gestoppt hat. <br>&Uuml;berprüfung aller geladenen Erweiterungen mittels phpinfo() k&ouml;nnte helfen. ',
+    'JXFILES_UPLOADERROR8'    => 'Eine PHP Erweiterung hat den Upload der Datei gestoppt. PHP bietet keine M&ouml;glichkeit an,<br> um festzustellen welche Erweiterung das Hochladen der Datei gestoppt hat. <br>&Uuml;berprüfung aller geladenen Erweiterungen mittels phpinfo() k&ouml;nnte helfen.',
     'JXFILES_UPLOADSUCCESS1'  => 'Datei',
     'JXFILES_UPLOADSUCCESS2'  => 'erfolgreich hochgeladen',
     
