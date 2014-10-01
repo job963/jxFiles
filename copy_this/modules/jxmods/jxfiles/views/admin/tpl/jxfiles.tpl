@@ -67,10 +67,88 @@ function change_all( name, elem )
             chkbox[i].checked = elem.checked;
 }
 
+function showRenamePopup( filename )
+{
+    document.getElementById('popupRenameWin').style.display = 'block';
+    document.getElementById('grayout').style.display = 'block';
+    document.getElementById('jxoldfile').value = filename;
+    document.getElementById('jxnewfile').value = filename;
+}
+
+function showDeletePopup()
+{
+    document.getElementById('popupDeleteWin').style.display = 'block';
+    document.getElementById('grayout').style.display = 'block';
+}
+
 </script>
 
     <h1>[{ oxmultilang ident="JXFILES_TITLE" }]</h1>
     <div style="position:absolute;top:4px;right:8px;color:gray;font-size:0.9em;border:1px solid gray;border-radius:3px;">&nbsp;[{$sModuleId}]&nbsp;[{$sModuleVersion}]&nbsp;</div>
+    <br clear="all" />
+
+    
+    <div id="popupRenameWin" class="jxpopupwin jxpopupfixed" style="display:none;">
+        <div style="background:#3960ab;color:#fff;padding:4px;">
+            <span style="font-weight:bold;">[{ oxmultilang ident="JXFILES_RENAME_TITLE" }]</span>
+        </div>
+        <div class="jxpopupclose" onclick="document.getElementById('popupRenameWin').style.display='none';document.getElementById('grayout').style.display='none';">
+            <div style="height:3px;"></div>
+            <span>X</span>
+        </div>
+        <div class="jxpopupcontent">
+            <form name="jxrename" id="jxrename" action="[{ $oViewConf->selflink }]" method="post">
+                [{ $oViewConf->hiddensid }]
+                <input type="hidden" name="cl" value="jxfiles">
+                <input type="hidden" name="fnc" value="jxrename">
+                <input type="hidden" name="oxid" value="[{ $oxid }]">
+                <input type="hidden" name="jxactdir" value="[{$sActPath}]">
+                [{*
+                <input type="hidden" name="jxsectiondir" value="[{$sSectionPath}]">
+                <input type="hidden" name="jxsortby" value="[{$sSortBy}]">
+                *}]
+
+                <br />
+                <table>
+                    <tr>
+                        <td><label for="jxoldfile">[{ oxmultilang ident="JXFILES_RENAME_OLDFILE" }]</label></td>
+                        <td><input type="text" name="jxoldfile" id="jxoldfile" size="40" value="nofilename" disabled="disabled" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="jxnewfile">[{ oxmultilang ident="JXFILES_RENAME_NEWFILE" }]</label></td>
+                        <td><input type="text" name="jxnewfile" id="jxnewfile" size="40" autofocus /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right"> </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right"><button type="submit" onclick="document.getElementById('jxoldfile').disabled=false;">[{ oxmultilang ident="JXFILES_RENAME_BUTTON" }]</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    
+    <div id="popupDeleteWin" class="jxpopupwin jxpopupfixed" style="display:none;">
+        <div style="background:#3960ab;color:#fff;padding:4px;">
+            <span style="padding-left:10px;font-size:1.2em;font-weight:bold;">[{$exectitle}]</span> 
+            <span style="padding-left:40px;">[{ oxmultilang ident="JXCMDBOARD_DURATION" }]: <b>[{$exectime}] sec.</b></span>
+            <span style="padding-left:40px;">[{ oxmultilang ident="JXCMDBOARD_RESPONSE" }]: <b>[{if $response == "200"}]OK[{else}]ERROR: [{$response}][{/if}]</b></span>
+        </div>
+        <div class="jxpopupclose" onclick="document.getElementById('popupDeleteWin').style.display='none';document.getElementById('grayout').style.display='none';">
+            <div style="height:3px;"></div>
+            <span>X</span>
+        </div>
+        <div class="jxpopupcontent">
+            <form>
+            <span>This file will be deleted - Do want to to do this really?</span>
+            </form>
+        </div>
+    </div>
+
+    <div id="grayout" class="jxgrayout" style="display:none;"> </div>
+    [{*<div id="execinfo" class="jxexecinfo">[{ oxmultilang ident="JXCMDBOARD_EXECUTING" }] <img src="[{$oViewConf->getModuleUrl('jxcmdboard','out/admin/src/img/progress.gif')}]"></div>*}]
+    
     
     <form name="transfer" id="transfer" action="[{ $shop->selflink }]" method="post">
         [{ $shop->hiddensid }]
@@ -237,7 +315,14 @@ function change_all( name, elem )
                 <td class="[{$listclass}]">[{if $sFile.writable}]W[{else}]R/O[{/if}]</td>
                 <td class="[{$listclass}]" align="center">
                     [{if $sFile.file AND $sFile.writable}]
-                        <input type="checkbox" name="jxfiles_oxid[]" value="[{$Order.orderartid}]">
+                        [{*<input type="checkbox" name="jxfiles_oxid[]" value="[{$Order.orderartid}]">*}]
+                        <a href="#" rel="nofollow" title="Rename" onclick="showRenamePopup('[{$sFile.name}]');">
+                            <img src="[{$iconPath}]/button_edit.png" style="position:relative;left:2px;top:3px;">
+                        </a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#" rel="nofollow" title="Rename" onclick="showDeletePopup();">
+                            <img src="[{$iconPath}]/button_delete.png" style="position:relative;left:2px;top:3px;">
+                        </a>
                     [{/if}]
                 </td>
             </tr>

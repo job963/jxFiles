@@ -95,6 +95,20 @@ class jxfiles extends oxAdminView
     }
     
     
+    public function jxrename()
+    {
+        $myConfig = oxRegistry::get("oxConfig");
+        $sShopPath = $myConfig->getConfigParam("sShopDir");
+                
+        $sActPath = oxConfig::getParameter( "jxactdir" );
+        $sOldFilename = $sShopPath . $sActPath . '/' . oxConfig::getParameter( "jxoldfile" );
+        $sNewFilename = $sShopPath . $sActPath . '/' . oxConfig::getParameter( "jxnewfile" );
+        
+        rename($sOldFilename, $sNewFilename);
+        
+        return;
+    }
+    
     
     private function _getFiles ($sPath) 
     {

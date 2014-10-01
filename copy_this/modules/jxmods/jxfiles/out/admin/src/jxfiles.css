@@ -37,6 +37,26 @@
     left: 60px;
 }
 
+
+/* --- Modal Popup -------------------- */
+
+.popupBox {
+    position: absolute;
+    border: 1px solid #c1c1c1;
+    padding: 10px;
+    display: none;
+}
+
+.popupBox img.closePop {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    cursor: pointer;
+}
+
+
+/* --- Directory Buttons -------------------- */
+
 .folderbtn {
     float: left;
     cursor: default;
@@ -65,4 +85,92 @@
     font-size: 1.25em;
     font-weight: bold;
     border-radius: 3px;
+}    
+    
+    
+.jxgrayout {
+    display: none;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 98;
+    background-color: #000000;
+    opacity: 0.4;
+    filter:alpha(opacity=40);  
+}
+.jxpopupwin {
+    position: fixed;
+    padding: 0px;
+    border: 1px solid #666;
+    z-index: 99;
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0 0 6px 6px #ccc;
+}
+
+.jxpopupflow {
+    left: 10%;
+    top: 10%;
+    width: 80%;
+    min-height: 65%;
+    height: 250px;
+}
+
+.jxpopupfixed {
+    left: 30%;
+    top: 30%;
+    width: 400px;
+    min-height: 50px;
+}
+
+.jxpopupwin table tr td {
+    padding-bottom: 8px;
+}
+
+.jxpopupwin label {
+    font-weight: bold;
+}
+.jxpopupwin input {
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    padding: 6px;
+}
+.jxpopupwin button {
+    background: forestgreen;
+    color: #fff;
+    font-weight: medium;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    padding: 6px;
+}
+
+.jxpopupclose {
+    position: absolute;
+    top: -11px;
+    right: -11px;
+    height: 24px;
+    width: 24px;
+    vertical-align: bottom;
+    text-align: center;
+    color: #ffffff;
+    background-image: linear-gradient(315deg, #000, #888);
+    /*background: #323232;*/
+    cursor: default;
+    border-radius: 12px;
+}
+.jxpopupclose span {
+    font-size: 14px;
+    font-weight: bold;
+}
+.jxpopupcontent {
+    margin: 10px;
+    min-height: 90%;
+    /*height: 200px;*/
+    overflow: no-content;
+    /*border: none1px solid gray;
+    background-color: #f0f0f0;*/
 }

@@ -23,6 +23,10 @@ $aLang = array(
     'JXFILES_UPLOADERROR8'    => 'Eine PHP Erweiterung hat den Upload der Datei gestoppt. PHP bietet keine M&ouml;glichkeit an,<br> um festzustellen welche Erweiterung das Hochladen der Datei gestoppt hat. <br>&Uuml;berprüfung aller geladenen Erweiterungen mittels phpinfo() k&ouml;nnte helfen.',
     'JXFILES_UPLOADSUCCESS1'  => 'Datei',
     'JXFILES_UPLOADSUCCESS2'  => 'erfolgreich hochgeladen',
+    'JXFILES_RENAME_TITLE'    => 'Datei umbenennen',
+    'JXFILES_RENAME_OLDFILE'  => 'Dateiname',
+    'JXFILES_RENAME_NEWFILE'  => 'Neuer Dateiname',
+    'JXFILES_RENAME_BUTTON'   => 'Umbenennen',
     
     'SHOP_MODULE_GROUP_JXFILES_DIRECTORIES1'   => 'Verzeichnis 1',
     'SHOP_MODULE_sJxFilesDir1Path'             => 'Pfad',
