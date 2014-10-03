@@ -29,22 +29,19 @@ class jxfiles extends oxAdminView
     public function render()
     {
         parent::render();
-        $oSmarty = oxUtilsView::getInstance()->getSmarty();
-        $oSmarty->assign( "oViewConf", $this->_aViewData["oViewConf"]);
-        $oSmarty->assign( "shop", $this->_aViewData["shop"]);
         
         $myConfig = oxRegistry::get("oxConfig");
         $sShopPath = $myConfig->getConfigParam("sShopDir");
                 
-        $sActPath = oxConfig::getParameter( "jxactdir" );
-        $sSectionPath = oxConfig::getParameter( "jxsectiondir" );
+        $sActPath = $this->getConfig()->getRequestParameter( "jxactdir" );
+        $sSectionPath = $this->getConfig()->getRequestParameter( "jxsectiondir" );
         if (empty($sActPath)) {
             $sActPath = $myConfig->getConfigParam("sJxFilesDir1Path");
             $sActTitle = $myConfig->getConfigParam("sJxFilesDir1Title");
             $sSectionPath = $sActPath;
         }
 
-        $sSubPath = oxConfig::getParameter( "jxsubdir" );
+        $sSubPath = $this->getConfig()->getRequestParameter( "jxsubdir" );
         if ($sSubPath == '..')
             $sActPath = dirname( $sActPath );
         elseif (!empty($sSubPath)) {
@@ -62,34 +59,35 @@ class jxfiles extends oxAdminView
             }
         }
         
-        /*$this->_logAction( " " );
+        /*
         $this->_logAction( "error=".$_FILES["uploadfile"]["error"] );
-        $this->_logAction( "upload=".$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']) );*/
+        $this->_logAction( "upload=".$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']) );
+        */
         if ($_FILES["uploadfile"]["tmp_name"] != '') {
             move_uploaded_file($_FILES["uploadfile"]["tmp_name"] ,$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']));
             $oSmarty->assign("sUploadedFile",basename($_FILES['uploadfile']['name']));
         }
         
         $aFiles = $this->_getFiles($sShopPath.$sActPath);
-        $sSortBy = oxConfig::getParameter( "jxsortby" );
+        $sSortBy = $this->getConfig()->getRequestParameter( "jxsortby" );
         if (empty($sSortBy))
             $sSortBy = 'name';
         $aFiles = $this->_sortFiles($aFiles, $sSortBy );
         
         $oModule = oxNew('oxModule');
         $oModule->load('jxfiles');
-        $oSmarty->assign("sModuleId",  $oModule->getId() );
-        $oSmarty->assign("sModuleVersion", $oModule->getInfo('version') );
+        $this->_aViewData["sModuleId"] = $oModule->getId();
+        $this->_aViewData["sModuleVersion"] = $oModule->getInfo('version');
         
-        $oSmarty->assign("iUploadError",$_FILES["uploadfile"]["error"]);
-        $oSmarty->assign("sShopPath",$sShopPath);
-        $oSmarty->assign("sShopUrl",$myConfig->getConfigParam("sShopURL"));
-        $oSmarty->assign("aDirs",$aDirs);
-        $oSmarty->assign("sActPath",$sActPath);
-        $oSmarty->assign("sSectionPath",$sSectionPath);
-        $oSmarty->assign("sActTitle",$sActTitle);
-        $oSmarty->assign("sSortBy",$sSortBy);
-        $oSmarty->assign("aFiles",$aFiles);
+        $this->_aViewData["iUploadError"] = $_FILES["uploadfile"]["error"];
+        $this->_aViewData["sShopPath"] = $sShopPath;
+        $this->_aViewData["sShopUrl"] = $myConfig->getConfigParam("sShopURL");
+        $this->_aViewData["aDirs"] = $aDirs;
+        $this->_aViewData["sActPath"] = $sActPath;
+        $this->_aViewData["sSectionPath"] = $sSectionPath;
+        $this->_aViewData["sActTitle"] = $sActTitle;
+        $this->_aViewData["sSortBy"] = $sSortBy;
+        $this->_aViewData["aFiles"] = $aFiles;
 
         return $this->_sThisTemplate;
     }
@@ -105,6 +103,20 @@ class jxfiles extends oxAdminView
         $sNewFilename = $sShopPath . $sActPath . '/' . oxConfig::getParameter( "jxnewfile" );
         
         rename($sOldFilename, $sNewFilename);
+        
+        return;
+    }
+    
+    
+    public function jxdelete()
+    {
+        $myConfig = oxRegistry::get("oxConfig");
+        $sShopPath = $myConfig->getConfigParam("sShopDir");
+                
+        $sActPath = oxConfig::getParameter( "jxactdir" );
+        $sFilename = $sShopPath . $sActPath . '/' . oxConfig::getParameter( "jxfile" );
+        
+        unlink($sFilename);
         
         return;
     }

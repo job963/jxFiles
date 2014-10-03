@@ -38,23 +38,6 @@
 }
 
 
-/* --- Modal Popup -------------------- */
-
-.popupBox {
-    position: absolute;
-    border: 1px solid #c1c1c1;
-    padding: 10px;
-    display: none;
-}
-
-.popupBox img.closePop {
-    position: absolute;
-    right: 7px;
-    top: 7px;
-    cursor: pointer;
-}
-
-
 /* --- Directory Buttons -------------------- */
 
 .folderbtn {
@@ -87,6 +70,7 @@
     border-radius: 3px;
 }    
     
+/* --- Popup Window -------------------- */
     
 .jxgrayout {
     display: none;
@@ -139,14 +123,50 @@
     border-radius: 3px;
     padding: 6px;
 }
+
 .jxpopupwin button {
     background: forestgreen;
     color: #fff;
-    font-weight: medium;
+    /*font-weight: medium;*/
     border: 1px solid #aaa;
     border-radius: 3px;
     padding: 6px;
 }
+.jxpopupwin button:hover {
+    background-image: linear-gradient(to top, forestgreen, limegreen);
+}
+.jxpopupwin button:active {
+    background-image: linear-gradient(to top, limegreen, forestgreen);
+}
+
+.jxpopupwin button[type=submit]{
+    background: #3399ff;
+    color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    padding: 6px;
+}
+.jxpopupwin button[type=submit]:hover{
+    background-image: linear-gradient(to top, royalblue, #3399ff);
+}
+.jxpopupwin button[type=submit]:active{
+    background-image: linear-gradient(to top, #3399ff, royalblue);
+}
+
+.jxpopupwin button[type=reset]{
+    background: darkgray;
+    color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    padding: 6px;
+}
+.jxpopupwin button[type=reset]:hover{
+    background-image: linear-gradient(to top, dimgray, darkgray);
+}
+.jxpopupwin button[type=reset]:active{
+    background-image: linear-gradient(to top, darkgray, dimgray);
+}
+
 
 .jxpopupclose {
     position: absolute;
@@ -157,20 +177,24 @@
     vertical-align: bottom;
     text-align: center;
     color: #ffffff;
-    background-image: linear-gradient(315deg, #000, #888);
-    /*background: #323232;*/
+    background: #444;
     cursor: default;
     border-radius: 12px;
 }
+.jxpopupclose:hover {
+    background-image: linear-gradient(315deg, #111, #777);
+}
+.jxpopupclose:active {
+    background-image: linear-gradient(315deg, #777, #111);
+}
+
 .jxpopupclose span {
     font-size: 14px;
     font-weight: bold;
 }
+
 .jxpopupcontent {
     margin: 10px;
     min-height: 90%;
-    /*height: 200px;*/
     overflow: no-content;
-    /*border: none1px solid gray;
-    background-color: #f0f0f0;*/
 }

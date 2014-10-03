@@ -5,7 +5,7 @@
 <script type="text/javascript">
   if(top)
   {
-    top.sMenuItem    = "[{ oxmultilang ident="mxorders" }]";
+    top.sMenuItem    = "[{ oxmultilang ident="mxcustnews" }]";
     top.sMenuSubItem = "[{ oxmultilang ident="jxfiles_menu" }]";
     top.sWorkArea    = "[{$_act}]";
     top.setTitle();
@@ -75,10 +75,11 @@ function showRenamePopup( filename )
     document.getElementById('jxnewfile').value = filename;
 }
 
-function showDeletePopup()
+function showDeletePopup( filename )
 {
     document.getElementById('popupDeleteWin').style.display = 'block';
     document.getElementById('grayout').style.display = 'block';
+    document.getElementById('jxfile').value = filename;
 }
 
 </script>
@@ -131,17 +132,32 @@ function showDeletePopup()
     
     <div id="popupDeleteWin" class="jxpopupwin jxpopupfixed" style="display:none;">
         <div style="background:#3960ab;color:#fff;padding:4px;">
-            <span style="padding-left:10px;font-size:1.2em;font-weight:bold;">[{$exectitle}]</span> 
-            <span style="padding-left:40px;">[{ oxmultilang ident="JXCMDBOARD_DURATION" }]: <b>[{$exectime}] sec.</b></span>
-            <span style="padding-left:40px;">[{ oxmultilang ident="JXCMDBOARD_RESPONSE" }]: <b>[{if $response == "200"}]OK[{else}]ERROR: [{$response}][{/if}]</b></span>
+            <span style="font-weight:bold;">[{ oxmultilang ident="JXFILES_DELETE_TITLE" }]</span>
         </div>
         <div class="jxpopupclose" onclick="document.getElementById('popupDeleteWin').style.display='none';document.getElementById('grayout').style.display='none';">
             <div style="height:3px;"></div>
             <span>X</span>
         </div>
         <div class="jxpopupcontent">
-            <form>
-            <span>This file will be deleted - Do want to to do this really?</span>
+            <form name="jxdelete" id="jxdelete" action="[{ $oViewConf->selflink }]" method="post">
+                [{ $oViewConf->hiddensid }]
+                <input type="hidden" name="cl" value="jxfiles">
+                <input type="hidden" name="fnc" value="jxdelete">
+                <input type="hidden" name="oxid" value="[{ $oxid }]">
+                <input type="hidden" name="jxactdir" value="[{$sActPath}]">
+                <input type="hidden" name="jxfile" id="jxfile" value="nofilename">
+                <table width="80%">
+                    <tr>
+                        <td align="right"><span>This file will be deleted - Do want to to do this really?</span>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <button type="submit" onclick="document.getElementById('jxoldfile').disabled=false;">[{ oxmultilang ident="JXFILES_DELETE_BUTTON" }]</button>
+                            &nbsp;
+                            <button type="reset" onclick="document.getElementById('popupDeleteWin').style.display='none';document.getElementById('grayout').style.display='none';">[{ oxmultilang ident="JXFILES_CANCEL_BUTTON" }]</button>
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
     </div>
@@ -189,12 +205,6 @@ function showDeletePopup()
             <input type="submit" name="submit" value=" [{ oxmultilang ident="ARTICLE_EXTEND_FILEUPLOAD" }] " style="margin-top:8px;" />
         </fieldset>
     </form> 
-    [{*<form>
-        <fieldset style="width:30%">
-            <legend>L&ouml;schen</legend>
-            <input type="submit" />
-        </fieldset>
-    </form>*}]
         
         
 
@@ -255,7 +265,7 @@ function showDeletePopup()
             </td>
             <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="JXFILES_FILETYPE" }]</div></div></td>
             <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="JXFILES_FILERIGHTS" }]</div></div></td>
-            <td class="listfilter" style="[{$headStyle}]" align="center"><div class="r1"><div class="b1"><input type="checkbox" onclick="change_all('jxfiles_oxid[]', this)"></div></div></td>
+            <td class="listfilter" style="[{$headStyle}]" align="center"><div class="r1"><div class="b1">[{ oxmultilang ident="JXFILES_FILEACTION" }]</div></div></td>
         </tr>
 
         [{ assign var="actArtTitle" value="..." }]
@@ -265,6 +275,7 @@ function showDeletePopup()
             <tr>
                 [{ cycle values="listitem,listitem2" assign="listclass" }]
                 <td class="[{$listclass}]">
+                    [{*&nbsp;*}]
                     [{if !$sFile.file}]
                         [{assign var="iconFile" value="folder_blue"}]
                     [{elseif  $sFile.type == "PNG" OR $sFile.type == "JPG" OR $sFile.type == "JPEG" OR $sFile.type == "GIF" OR $sFile.type == "ICO"}]
@@ -298,7 +309,7 @@ function showDeletePopup()
                     [{$sFile.name}]
                     </a>*}]
                 </td>
-                <td class="[{$listclass}]">[{$sFile.date}]</td>
+                <td class="[{$listclass}]">&nbsp;[{$sFile.date}]</td>
                 <td class="[{$listclass}]" align="right">[{if $sFile.file}]<span title="[{$sFile.sizeOrg|number_format:0:",":"."}] Bytes">[{$sFile.sizeKB|number_format:0:",":"."}] KB</span>[{/if}]&nbsp;</td>
                 <td class="[{$listclass}]">
                     &nbsp;
@@ -312,15 +323,14 @@ function showDeletePopup()
                         [{$sFile.type}][{ oxmultilang ident="JXFILES_FILE" }]
                     [{/if}]
                 </td>
-                <td class="[{$listclass}]">[{if $sFile.writable}]W[{else}]R/O[{/if}]</td>
+                <td class="[{$listclass}]">&nbsp;[{if $sFile.writable}]W[{else}]R/O[{/if}]</td>
                 <td class="[{$listclass}]" align="center">
                     [{if $sFile.file AND $sFile.writable}]
-                        [{*<input type="checkbox" name="jxfiles_oxid[]" value="[{$Order.orderartid}]">*}]
                         <a href="#" rel="nofollow" title="Rename" onclick="showRenamePopup('[{$sFile.name}]');">
                             <img src="[{$iconPath}]/button_edit.png" style="position:relative;left:2px;top:3px;">
                         </a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#" rel="nofollow" title="Rename" onclick="showDeletePopup();">
+                        <a href="#" rel="nofollow" title="Rename" onclick="showDeletePopup('[{$sFile.name}]');">
                             <img src="[{$iconPath}]/button_delete.png" style="position:relative;left:2px;top:3px;">
                         </a>
                     [{/if}]

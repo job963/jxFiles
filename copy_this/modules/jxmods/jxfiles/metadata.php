@@ -3,7 +3,7 @@
 /**
  * Metadata version
  */
-$sMetadataVersion = '1.0';
+$sMetadataVersion = '1.1';
  
 /**
  * Module information
@@ -12,8 +12,8 @@ $aModule = array(
     'id'           => 'jxfiles',
     'title'        => 'jxFiles - File Administration',
     'description'  => array(
-                        'de' => 'Admin-Modul für die Verwaltung von Dateien.',
-                        'en' => 'Admin module for managing of files.'
+                        'de' => 'Modul für die Verwaltung von Dateien.',
+                        'en' => 'Module for managing of files.'
                         ),
     'thumbnail'    => 'jxfiles.png',
     'version'      => '0.2',
