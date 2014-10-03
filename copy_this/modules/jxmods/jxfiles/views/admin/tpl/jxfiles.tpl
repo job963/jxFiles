@@ -51,22 +51,6 @@ function editThis( sID, sClass )
     oTransfer.submit();
 }
 
-function change_all( name, elem )
-{
-    if(!elem || !elem.form) 
-        return alert("Check Parameters");
-
-    var chkbox = elem.form.elements[name];
-    if (!chkbox) 
-        return alert(name + " doesn't exist!");
-
-    if (!chkbox.length) 
-        chkbox.checked = elem.checked; 
-    else 
-        for(var i = 0; i < chkbox.length; i++)
-            chkbox[i].checked = elem.checked;
-}
-
 function showRenamePopup( filename )
 {
     document.getElementById('popupRenameWin').style.display = 'block';
