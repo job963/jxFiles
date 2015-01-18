@@ -37,6 +37,10 @@
     left: 60px;
 }
 
+#liste tr:hover td{
+    background-color: #e0e0e0;
+}
+
 
 /* --- Directory Buttons -------------------- */
 
