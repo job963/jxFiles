@@ -64,6 +64,7 @@ function showDeletePopup( filename )
     document.getElementById('popupDeleteWin').style.display = 'block';
     document.getElementById('grayout').style.display = 'block';
     document.getElementById('jxfile').value = filename;
+    document.getElementById('jxfilename').innerHTML = filename;
 }
 
 </script>
@@ -132,7 +133,7 @@ function showDeletePopup( filename )
                 <input type="hidden" name="jxfile" id="jxfile" value="nofilename">
                 <table width="80%">
                     <tr>
-                        <td align="right"><span>This file will be deleted - Do want to to do this really?</span>
+                        <td align="left"><span>[{ oxmultilang ident="JXFILES_DELETE_QUESTION" args="<b><span id='jxfilename'></span></b>" }]</span>
                     </tr>
                     <tr>
                         <td align="right">
@@ -146,8 +147,8 @@ function showDeletePopup( filename )
         </div>
     </div>
 
+                
     <div id="grayout" class="jxgrayout" style="display:none;"> </div>
-    [{*<div id="execinfo" class="jxexecinfo">[{ oxmultilang ident="JXCMDBOARD_EXECUTING" }] <img src="[{$oViewConf->getModuleUrl('jxcmdboard','out/admin/src/img/progress.gif')}]"></div>*}]
     
     
     <form name="transfer" id="transfer" action="[{ $shop->selflink }]" method="post">

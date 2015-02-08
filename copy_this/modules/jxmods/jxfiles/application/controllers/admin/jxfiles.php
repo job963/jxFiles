@@ -36,8 +36,8 @@ class jxfiles extends oxAdminView
         $sActPath = $this->getConfig()->getRequestParameter( "jxactdir" );
         $sSectionPath = $this->getConfig()->getRequestParameter( "jxsectiondir" );
         if (empty($sActPath)) {
-            $sActPath = $myConfig->getConfigParam("sJxFilesDir1Path");
-            $sActTitle = $myConfig->getConfigParam("sJxFilesDir1Title");
+            $sActPath = $myConfig->getConfigParam( "sJxFilesDir1Path" );
+            $sActTitle = $myConfig->getConfigParam( "sJxFilesDir1Title" );
             $sSectionPath = $sActPath;
         }
 
@@ -65,7 +65,7 @@ class jxfiles extends oxAdminView
         */
         if ($_FILES["uploadfile"]["tmp_name"] != '') {
             move_uploaded_file($_FILES["uploadfile"]["tmp_name"] ,$sShopPath.$sActPath.'/'.basename($_FILES['uploadfile']['name']));
-            $oSmarty->assign("sUploadedFile",basename($_FILES['uploadfile']['name']));
+            $this->_aViewData["sUploadedFile"] = basename($_FILES['uploadfile']['name']);
         }
         
         $aFiles = $this->_getFiles($sShopPath.$sActPath);
@@ -95,12 +95,12 @@ class jxfiles extends oxAdminView
     
     public function jxrename()
     {
-        $myConfig = oxRegistry::get("oxConfig");
-        $sShopPath = $myConfig->getConfigParam("sShopDir");
+        $myConfig = oxRegistry::get( "oxConfig" );
+        $sShopPath = $myConfig->getConfigParam( "sShopDir" );
                 
-        $sActPath = oxConfig::getParameter( "jxactdir" );
-        $sOldFilename = $sShopPath . $sActPath . '/' . oxConfig::getParameter( "jxoldfile" );
-        $sNewFilename = $sShopPath . $sActPath . '/' . oxConfig::getParameter( "jxnewfile" );
+        $sActPath = $this->getConfig()->getRequestParameter( "jxactdir" );
+        $sOldFilename = $sShopPath . $sActPath . '/' . $this->getConfig()->getRequestParameter( "jxoldfile" );
+        $sNewFilename = $sShopPath . $sActPath . '/' . $this->getConfig()->getRequestParameter( "jxnewfile" );
         
         rename($sOldFilename, $sNewFilename);
         
@@ -113,8 +113,8 @@ class jxfiles extends oxAdminView
         $myConfig = oxRegistry::get("oxConfig");
         $sShopPath = $myConfig->getConfigParam("sShopDir");
                 
-        $sActPath = oxConfig::getParameter( "jxactdir" );
-        $sFilename = $sShopPath . $sActPath . '/' . oxConfig::getParameter( "jxfile" );
+        $sActPath = $this->getConfig()->getRequestParameter( "jxactdir" );
+        $sFilename = $sShopPath . $sActPath . '/' . $this->getConfig()->getRequestParameter( "jxfile" );
         
         unlink($sFilename);
         

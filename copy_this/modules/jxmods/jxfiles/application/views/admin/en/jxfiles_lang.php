@@ -26,6 +26,7 @@ $aLang = array(
     'JXFILES_UPLOADSUCCESS2'  => 'successfully uploaded',
     'JXFILES_RENAME_TITLE'    => 'Rename file',
     'JXFILES_DELETE_TITLE'    => 'Delete file',
+    'JXFILES_DELETE_QUESTION' => 'This file %s will be deleted!<br /><br />Do want to to do this really?',
     'JXFILES_RENAME_OLDFILE'  => 'Filename',
     'JXFILES_RENAME_NEWFILE'  => 'New filename',
     'JXFILES_RENAME_BUTTON'   => 'Rename',

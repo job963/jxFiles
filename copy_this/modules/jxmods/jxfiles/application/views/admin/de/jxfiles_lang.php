@@ -26,6 +26,7 @@ $aLang = array(
     'JXFILES_UPLOADSUCCESS2'  => 'erfolgreich hochgeladen',
     'JXFILES_RENAME_TITLE'    => 'Datei umbenennen',
     'JXFILES_DELETE_TITLE'    => 'Datei l&ouml;schen',
+    'JXFILES_DELETE_QUESTION' => 'Die Datei %s wird gel&ouml;scht!<br /><br /> M&ouml;chten sie fortfahren?',
     'JXFILES_RENAME_OLDFILE'  => 'Dateiname',
     'JXFILES_RENAME_NEWFILE'  => 'Neuer Dateiname',
     'JXFILES_RENAME_BUTTON'   => 'Umbenennen',
